@@ -22,11 +22,11 @@ use Illuminate\Support\Facades\Route;
 //
 //Auth::routes();
 //
-//Route::middleware('auth')->group(function () {
-//    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//
-//    Route::resource('clients', App\Http\Controllers\ClientController::class);
-//});
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::resource('clients', App\Http\Controllers\ClientController::class);
+});
 
 //Auth::routes();
 
