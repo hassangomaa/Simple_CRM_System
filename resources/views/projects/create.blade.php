@@ -5,51 +5,52 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Clients</div>
+                    <div class="card-header">Create Project</div>
 
                     <div class="card-body">
-                        @if (session('success'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('success') }}
+                        <form action="{{ route('projects.store') }}" method="POST">
+                            @csrf
+
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
-                        @endif
 
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Image</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($clients as $client)
-                                <tr>
-                                    <td>{{ $client->name }}</td>
-                                    <td>{{ $client->email }}</td>
-                                    <td>{{ $client->phone }}</td>
-                                    <td>
-                                        @if ($client->image)
-                                            <img src="{{ asset('storage/images/' . $client->image) }}" alt="{{ $client->name }}" width="50" height="50">
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('clients.show', $client) }}" class="btn btn-primary btn-sm">View</a>
-                                        <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('clients.destroy', $client) }}" method="POST" style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this client?')">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                                @error('description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
 
-                        <a href="{{ route('clients.create') }}" class="btn btn-primary">Add Client</a>
+                            <div class="form-group">
+                                <label for="client_id">Client</label>
+                                <select name="client_id" id="client_id" class="form-control @error('client_id') is-invalid @enderror" required>
+                                    <option value="">Select a client</option>
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('client_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Create Project</button>
+                                <a href="{{ route('projects.index') }}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

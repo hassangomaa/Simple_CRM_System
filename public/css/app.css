@@ -1,1 +1,29 @@
+/* Pagination */
+.pagination {
+    margin: 0 auto;
+    display: inline-block;
+}
 
+.pagination li {
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    padding: 7px 12px;
+    font-size: 14px;
+}
+
+.pagination li a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+
+.pagination li.active {
+    background-color: #007bff;
+}
+
+.pagination li.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

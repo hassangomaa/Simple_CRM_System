@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**  
+    /**
      * Seed the application's database.
      *
      * @return void
@@ -20,5 +20,12 @@ class DatabaseSeeder extends Seeder
         $this->call([ UsersTableSeeder::class]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+
+        // Create 50 clients using the Client factory
+        Client::factory(50)->create();
+
+        // Create 50 projects using the Project factory
+        Project::factory(50)->create();
     }
 }
