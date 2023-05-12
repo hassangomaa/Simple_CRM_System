@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper;
+use App\Http\Requests\CreateClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
-use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::latest()->paginate(10);
 
         return view('clients.index', compact('clients'));
     }
@@ -19,26 +21,35 @@ class ClientController extends Controller
         return view('clients.create');
     }
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:clients,email',
-            'phone' => 'required',
-            'image' => 'nullable|image',
-        ]);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $filename);
-            $validatedData['image'] = $filename;
+
+    public function update(UpdateClientRequest $request, Client $client)
+    {
+        $validatedData = $request->validated();
+
+        $image = Helper::uploadImage($request, 'image', 'public/images');
+
+        if ($image) {
+            $validatedData['image'] = $image;
         }
+
+        $client->update($validatedData);
+
+        return redirect()->route('clients.index')->with('success', 'Client updated successfully.');
+    }
+
+
+    public function store(CreateClientRequest $request)
+    {
+        $validatedData = $request->validated();
+
+        $validatedData['image'] = $request->hasFile('image') ? Helper::uploadImage($request, 'image', 'public/images') : null;
 
         Client::create($validatedData);
 
         return redirect()->route('clients.index')->with('success', 'Client created successfully.');
     }
+
 
     public function show(Client $client)
     {
@@ -50,26 +61,7 @@ class ClientController extends Controller
         return view('clients.edit', compact('client'));
     }
 
-    public function update(Request $request, Client $client)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:clients,email,' . $client->id,
-            'phone' => 'required',
-            'image' => 'nullable|image',
-        ]);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $filename);
-            $validatedData['image'] = $filename;
-        }
-
-        $client->update($validatedData);
-
-        return redirect()->route('clients.index')->with('success', 'Client updated successfully.');
-    }
 
     public function destroy(Client $client)
     {
