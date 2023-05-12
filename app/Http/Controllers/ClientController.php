@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use Illuminate\Http\Request;
+use App\Helper;
+use App\Http\Requests\CreateClientRequest;
+use App\Http\Requests\UpdateClientRequest;
+use App\Repositories\ClientRepository;
 
 class ClientController extends Controller
 {
+    protected $clientRepository;
+
+    public function __construct(ClientRepository $clientRepository)
+    {
+        $this->clientRepository = $clientRepository;
+    }
+
     public function index()
     {
-        $clients = Client::all();
+        $clients = $this->clientRepository->getAllClients();
 
         return view('clients.index', compact('clients'));
     }
@@ -19,61 +28,53 @@ class ClientController extends Controller
         return view('clients.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateClientRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:clients,email',
-            'phone' => 'required',
-            'image' => 'nullable|image',
-        ]);
+        $validatedData = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $filename);
-            $validatedData['image'] = $filename;
-        }
+        $validatedData['image'] = $request->hasFile('image') ? Helper::uploadImage($request, 'image', 'public/images') : null;
 
-        Client::create($validatedData);
+        $this->clientRepository->createClient($validatedData);
 
         return redirect()->route('clients.index')->with('success', 'Client created successfully.');
     }
 
-    public function show(Client $client)
+    public function show($id)
     {
+        $client = $this->clientRepository->getClientById($id);
+
         return view('clients.show', compact('client'));
     }
 
-    public function edit(Client $client)
+    public function edit($id)
     {
+        $client = $this->clientRepository->getClientById($id);
+
         return view('clients.edit', compact('client'));
     }
 
-    public function update(Request $request, Client $client)
+    public function update(UpdateClientRequest $request, $id)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:clients,email,' . $client->id,
-            'phone' => 'required',
-            'image' => 'nullable|image',
-        ]);
+        $client = $this->clientRepository->getClientById($id);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $filename);
-            $validatedData['image'] = $filename;
+        $validatedData = $request->validated();
+
+        $image = Helper::uploadImage($request, 'image', 'public/images');
+
+        if ($image) {
+            $validatedData['image'] = $image;
         }
 
-        $client->update($validatedData);
+        $this->clientRepository->updateClient($client, $validatedData);
 
         return redirect()->route('clients.index')->with('success', 'Client updated successfully.');
     }
 
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        $client->delete();
+        $client = $this->clientRepository->getClientById($id);
+
+        $this->clientRepository->deleteClient($client);
 
         return redirect()->route('clients.index')->with('success', 'Client deleted successfully.');
     }
