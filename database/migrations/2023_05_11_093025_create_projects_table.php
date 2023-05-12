@@ -18,12 +18,15 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->date('deadline')->nullable();
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->foreignId('assigned_user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->boolean('status')->default(0);
+            $table->unsignedBigInteger('client_id');
+//            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->unsignedBigInteger('assigned_user_id')->nullable();
+//            $table->foreign('assigned_user_id')->references('id')->on('users')->onDelete('set null');
+            $table->boolean('status')->default(false)->comment('0: inactive, 1: active');
             $table->timestamps();
             $table->softDeletes();
         });
+
 
     }
 

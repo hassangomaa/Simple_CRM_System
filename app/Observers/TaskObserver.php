@@ -18,9 +18,8 @@ class TaskObserver
     public function saving(Task $task)
     {
         $validator = \Validator::make($task->toArray(), [
-            'title' => 'required|max:255',
+            'name' => 'required|max:255',
             'description' => 'required',
-            'due_date' => 'required|date',
         ]);
 
         if ($validator->fails()) {
