@@ -10,7 +10,7 @@ class UpdateClientRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|required',
-            'email' => 'sometimes|required|email|unique:clients,email,' . $this->client->id,
+            'email' => 'sometimes|required|email|unique:clients,email,' . $this->client,
             'phone' => 'sometimes|required',
             'image' => 'nullable|image',
         ];
