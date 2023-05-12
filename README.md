@@ -51,5 +51,5 @@ This project is open-sourced software licensed under the MIT license.
 ![Dashboard Screenshot](ScreenShoots/10.png)
 ![Dashboard Screenshot](ScreenShoots/11.png)
 ![Dashboard Screenshot](ScreenShoots/12.png)
-<p> Custom 404 - ERROR Page </p>
+Custom 404 - ERROR Page 
 ![Dashboard Screenshot](ScreenShoots/13.png)
