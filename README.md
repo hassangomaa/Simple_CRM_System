@@ -37,3 +37,17 @@ Contributions to this project are welcome. To contribute, please follow the guid
 ## License
 
 This project is open-sourced software licensed under the MIT license.
+
+
+![Dashboard Screenshot](ScreenShoots/1.png)
+![Dashboard Screenshot](ScreenShoots/2.png)
+![Dashboard Screenshot](ScreenShoots/3.png)
+![Dashboard Screenshot](ScreenShoots/4.png)
+![Dashboard Screenshot](ScreenShoots/5.png)
+![Dashboard Screenshot](ScreenShoots/6.png)
+![Dashboard Screenshot](ScreenShoots/7.png)
+![Dashboard Screenshot](ScreenShoots/8.png)
+![Dashboard Screenshot](ScreenShoots/9.png)
+![Dashboard Screenshot](ScreenShoots/10.png)
+![Dashboard Screenshot](ScreenShoots/11.png)
+![Dashboard Screenshot](ScreenShoots/12.png)
