@@ -25,3 +25,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
 });
+
+Auth::routes();
+
