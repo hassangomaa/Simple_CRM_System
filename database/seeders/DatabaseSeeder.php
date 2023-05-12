@@ -3,6 +3,7 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
@@ -29,5 +30,7 @@ class DatabaseSeeder extends Seeder
 
         // Create 50 projects using the Project factory
         Project::factory(50)->create();
+        User::factory(50)->create();
+
     }
 }

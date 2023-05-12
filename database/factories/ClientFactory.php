@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Generator as Faker;
 
 class ClientFactory extends Factory
 {
@@ -26,6 +25,7 @@ class ClientFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
+            'image' => "user.png",
         ];
     }
 }
