@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'client_id'];
+    protected $fillable = ['name', 'description', 'client_id', 'assigned_user_id', 'deadline', 'status'];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'deadline'];
 
     public function client()
     {
@@ -23,4 +23,20 @@ class Project extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
+    }
+
+    public function assignedClient()
+    {
+        return $this->client;
+    }
+
+    public function getAssignedClientAttribute()
+    {
+        return $this->assignedClient();
+    }
+
 }

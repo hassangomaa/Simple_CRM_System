@@ -1,40 +1,43 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        {{ $project->name }}
-                        <a href="{{ route('projects.edit', $project) }}" class="btn btn-sm btn-primary float-right">Edit</a>
-                    </div>
+                    <div class="card-header">Project Details</div>
 
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <p>{{ $project->name }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Description:</label>
-                            <p>{{ $project->description ?? 'N/A' }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="client">Client:</label>
-                            <p>{{ $project->client->name }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="created_at">Created at:</label>
-                            <p>{{ $project->created_at }}</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="updated_at">Updated at:</label>
-                            <p>{{ $project->updated_at }}</p>
-                        </div>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ $project->name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ $project->description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Client</th>
+                                <td>{{ $project->client->name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Assigned User</th>
+                                <td>{{ $project->assignedUser->name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Deadline</th>
+                                <td>{{ $project->deadline->format('m/d/Y') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>{{ $project->status ? 'Open' : 'Close' }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('projects.index') }}" class="btn btn-secondary">Back</a>
                     </div>
                 </div>
             </div>

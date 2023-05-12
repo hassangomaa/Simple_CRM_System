@@ -27,6 +27,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('clients', App\Http\Controllers\ClientController::class);
     Route::resource('projects', 'App\Http\Controllers\ProjectsController');
+    Route::resource('users', \App\Http\Controllers\UsersController::class);
+
+    Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
+
 
 });
 

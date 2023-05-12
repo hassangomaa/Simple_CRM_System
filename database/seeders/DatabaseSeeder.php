@@ -1,6 +1,8 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\Client;
+use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
@@ -13,13 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-
-        DB::table('users')->truncate();
+//        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+//
+//        DB::table('users')->truncate();
 
         $this->call([ UsersTableSeeder::class]);
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+//        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
 
         // Create 50 clients using the Client factory

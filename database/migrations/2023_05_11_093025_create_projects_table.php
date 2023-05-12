@@ -17,10 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
+            $table->date('deadline')->nullable();
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('assigned_user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->boolean('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**

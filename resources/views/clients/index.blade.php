@@ -1,12 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Clients</div>
-
+                    <div class="card-header">
+                        <h3 class="card-title">All Clients</h3>
+                        <div class="card-tools">
+                            <a href="{{ route('clients.create') }}" class="btn btn-primary">Add Client</a>
+                        </div>
+                    </div>
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success" role="alert">
