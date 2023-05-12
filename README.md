@@ -37,3 +37,7 @@ Contributions to this project are welcome. To contribute, please follow the guid
 ## License
 
 This project is open-sourced software licensed under the MIT license.
+
+
+![Dashboard Screenshot](ScreenShoots/1.png)
+
