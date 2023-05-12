@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 100);
             $table->text('description')->nullable();
-            $table->boolean('completed')->default(false);
-            $table->foreignId('project_id')->constrained()->onDelete('cascade');
+            $table->boolean('completed')->default(false)->comment('0: not completed, 1: completed');
+            $table->unsignedBigInteger('project_id');
+//            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
